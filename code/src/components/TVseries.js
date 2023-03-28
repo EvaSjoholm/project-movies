@@ -26,27 +26,21 @@ export const TVseries = () => {
       });
   }, []);
 
-  const shows = tvShow.map((show) => {
-    let posterImage = null
-
-    if (show.poster_path != null) {
-      posterImage = (<img alt={`Poster for: ${show.name}`} src={`${imgConfig.secure_base_url}w500${show.poster_path}`} />);
-    } else {
-      posterImage = (<div>[No image]</div>);
-    }
-
-    return (
-      // This should probably be a component
-      <div
-        className="movie-card"
-        key={show.id}
-        poster={show.poster_path}>
-        {show.name}
-        {/* Another component */}
-        {posterImage}
-      </div>
-    );
-  });
+  const shows = tvShow
+    .filter((show) => show.poster_path != null)
+    .map((show) => {
+      return (
+        // This should probably be a component
+        <div
+          className="movie-card"
+          key={show.id}
+          poster={show.poster_path}>
+          {show.name}
+          {/* Another component */}
+          <img alt={`Poster for: ${show.name}`} src={`${imgConfig.secure_base_url}w500${show.poster_path}`} />
+        </div>
+      );
+    });
 
   return (<div>{shows}</div>);
 }
